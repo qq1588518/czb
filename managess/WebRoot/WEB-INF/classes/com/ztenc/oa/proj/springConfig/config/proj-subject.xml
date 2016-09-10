@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+			  "spring-beans-2.0.dtd">
+<beans>
+<!--MultiLogController共用解析器-->
+	<bean id="methodNameResolver"
+		class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+		<property name="paramName">
+			<value>action</value>
+		</property>
+	</bean>
+
+	<!--mutication控制器  -->
+	<!--MultiLogController共用解析器-->
+	<!-- 基于收到的请求解析它必须调用的方法 -->
+
+	<bean id="subjectController"
+		class="com.ztenc.oa.proj.web.subject.SubjectController">
+		<property name="methodNameResolver">
+			<ref bean="methodNameResolver" />
+		</property>
+		<property name="subjectService">
+		  <ref bean="subjectService"/>
+		</property>
+	</bean>
+	
+	<bean id="subjectService" class="com.ztenc.oa.proj.service.subject.SubjectServiceImpl">
+	  <property name="subjectDao">
+	     <ref bean="subjectDao"/>
+	  </property>
+	</bean>
+	
+	<bean id="subjectDao" class="com.ztenc.oa.proj.dao.subject.SubjectDaoImpl">
+	<property name="sessionFactory">
+	   <ref bean="sessionFactory"/>
+	</property>
+	</bean>
+	
+	<bean id="safePwd" class="com.ztenc.oa.proj.util.SafePwdImpl">
+		<property name="pwdSalt"  >
+		<value>${util.safepwd.pwdSalt}</value>
+		</property>
+	</bean>
+</beans>

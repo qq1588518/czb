@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+			  "spring-beans-2.0.dtd">
+<beans>
+	<bean id="loninService"
+		class="com.ztenc.oa.proj.service.webservice.LoninServiceImpl">
+		<property name="loginDaow">
+			<ref bean="loginDaow" />
+		</property>
+		<property name="getCountDao">
+			<ref bean="getCountDao" />
+		</property>
+	</bean>
+	
+	<bean id="getVersionService"
+		class="com.ztenc.oa.proj.service.webservice.GetVersionServiceImpl">
+		<property name="versionNo">
+		<value>${autoUpdate.version}</value>
+		</property>
+	</bean>
+	
+	<bean id="sysOptService"
+		class="com.ztenc.oa.proj.service.webservice.SysOptServiceImpl">
+		<property name="sysOtpDao">
+			<ref bean="sysOtpDao" />
+		</property>
+	</bean>
+
+	<bean id="loginDaow" class="com.ztenc.oa.proj.dao.webservice.LoginDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean id="getCountDao" class="com.ztenc.oa.proj.dao.webservice.GetCountDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean id="sysOtpDao" class="com.ztenc.oa.proj.dao.webservice.SysOtpDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+</beans>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">财智宝</string>
+	
+	<!-- 首页的list_item中的文本信息 -->
+	<string name="str_news">移动资讯</string>
+	<string name="str_shopping">移动购物</string>
+	<string name="str_viewtool">展业工具</string>
+	<string name="str_train">移动培训</string>
+	<string name="mng_business">业务管理</string>
+	<string name="mng_account">账户管理</string>
+	<string name="mobile_email">手机邮箱</string>
+	<string name="str_play">娱乐中心</string>
+	<string name="str_softup">软件升级</string>
+	
+	
+	<string name="str_news_s">移动资讯  触手可及</string>
+	<string name="str_shopping_s">移动购物  随时随心</string>
+	<string name="str_viewtool_s">展业工具  事业帮手</string>
+	<string name="str_train_s">丰富课程  一路随行</string>
+	<string name="mng_business_s">个人业务  随时管理</string>
+	<string name="mng_account_s">个人一卡通帐户管理</string>
+	<string name="mobile_email_s">信息邮件  随时送达</string>
+	<string name="str_play_s">随身娱乐  随时乐享</string>
+	<string name="str_soft_s">最新版本  随时获取</string>
+	<!-- 移动培训的list_item中的文本信息 -->
+	<string name="train_video">视频点播</string>
+	<string name="train_online">在线直播</string>
+	
+	<string name="train_video_s">道生一,一生二,\n二生三,三生万物</string>
+	<string name="train_online_s">御坊堂“精、诚、正、善”\n的品牌内涵</string>
+	
+	<!-- 娱乐中心的list_item中的文本信息 -->
+	<string name="play_radio">广播</string>
+	<string name="play_tv">网络电视</string>
+	<string name="play_movies">移动影院</string>
+	<string name="play_music">免费影音</string>
+	
+	<string name="play_radio_s"></string>
+	<string name="play_tv_s">御坊堂“精、诚、正、善”</string>
+	<string name="play_movies_s"></string>
+	<string name="play_music_s"></string>
+	<string name="play_game_s"></string>
+	
+	<!-- 展业工具的list_item中的文本信息 -->
+	<string name="viewtool_culture">企业文化</string>
+	<string name="viewtool_products">产品介绍</string>
+	<string name="viewtool_intrudction">事业介绍</string>
+	<string name="viewtool_load">课件下载</string>
+	<string name="viewtool_service">在线客服</string>
+	<string name="viewtool_qustion">事业百问</string>
+	<string name="viewtool_input">会员专区</string>
+	<string name="viewtool_store">工作室专区</string>
+	<string name="viewtool_czt">财智通</string>
+	
+	<string name="viewtool_culture_s">了解企业实力、文化、历史</string>
+	<string name="viewtool_products_s">全方位展示产品卓越品质</string>
+	<string name="viewtool_intrudction_s">感受三生事业平台魅力</string>
+	<string name="viewtool_load_s">事件、培训辅助课件</string>
+	<string name="viewtool_service_s">客服在线解答事业疑问</string>
+	<string name="viewtool_qustion_s">三生事业百问解答</string>
+	<string name="viewtool_input_s"> </string>
+	<string name="viewtool_store_s"> </string>
+	<string name="viewtool_store_czt"> </string>
+	
+	<string name ="account_phone">话费查询</string>
+	<string name ="account_phone_s"> </string>
+	
+	<string name="button_str_i">产品介绍</string>
+	<string name="button_str_p">专家讲解</string>
+	<string name="button_str_u">使用方法</string>
+	
+	<string name="button_mode">切换模式</string>
+	<string name="button_search">搜索</string>
+	<string name="button_exit">退出</string>
+	
+	
+	<string name="dialog_title">此功能需开通VPDN业务后使用！</string>
+	<string name="dialog_error">此功能尚未开通!</string>
+	<string name="dialog_again">重新登录</string>
+    <string name="dialog_cancel">退出</string>
+    <string name="dialog_sysexit">是否确定退出本程序！</string>
+	
+	<string name="login_user">会员编号</string>
+    <string name="login_pass">密\t\t码</string>
+    <string name="login_text">财智宝登陆</string>
+    
+    <string name="btn_ok">确认</string>
+    <string name="btn_login">登录</string>
+    <string name="btn_cancel">取消</string>
+    <string name="orientation_l">横屏</string>
+    <string name="orientation_u">重力感应</string>
+    <string name="orientation_p">竖屏</string>
+    
+    
+</resources>

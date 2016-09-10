@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+			  "spring-beans-2.0.dtd">
+<beans>
+<!--MultiLogController共用解析器-->
+	<bean id="methodNameResolver"
+		class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+		<property name="paramName">
+			<value>action</value>
+		</property>
+	</bean>
+
+	<!--mutication控制器  -->
+	<!--MultiLogController共用解析器-->
+	<!-- 基于收到的请求解析它必须调用的方法 -->
+
+	<bean id="modifyPwController"
+		class="com.ztenc.oa.proj.web.modifyPw.ModifyPwController">
+		<property name="methodNameResolver">
+			<ref bean="methodNameResolver" />
+		</property>
+		<property name="modifyPwService">
+		  <ref bean="modifyPwService"/>
+		</property>
+	</bean>
+
+	<bean name="modifyPwDao" class="com.ztenc.oa.proj.dao.modifyPw.ModifyPwDaoImpl">
+	<property name="sessionFactory">
+	   <ref bean="sessionFactory"/>
+	</property>
+	</bean>
+	
+	
+	<bean name="modifyPwService" class="com.ztenc.oa.proj.service.modifyPw.ModifyPwServiceImpl">
+	  <property name="modifyPwDao">
+	     <ref bean="modifyPwDao"/>
+	  </property>
+	  <property name="safePwd">
+	      <ref bean="safePwd"/>
+	   </property>
+	</bean>
+	
+	<bean id="safePwd" class="com.ztenc.oa.proj.util.SafePwdImpl">
+		<property name="pwdSalt"  >
+		<value>${util.safepwd.pwdSalt}</value>
+		</property>
+	</bean>
+</beans>

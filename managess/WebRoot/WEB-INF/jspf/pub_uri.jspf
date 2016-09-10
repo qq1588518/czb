@@ -1,0 +1,22 @@
+
+
+<%
+
+String request_url=request.getRequestURI();
+String servlet_path=request.getServletPath();
+String scheme=request.getScheme();
+String server_name=request.getServerName();
+int server_port=request.getServerPort();
+int at_position=request_url.indexOf(servlet_path);
+String current_url;
+if(at_position== -1){
+    int len=request_url.length();
+    current_url=request_url.substring(0,len -1);
+}
+else{
+    current_url=request_url.substring(0,at_position);
+}
+String uri=scheme+"://"+server_name+":"+server_port+current_url+"/";
+String c_url = "../../../../"+current_url.substring(1,current_url.length())+"/";
+//String c_url="../../../../host-manager/";
+%>

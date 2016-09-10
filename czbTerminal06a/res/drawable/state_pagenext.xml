@@ -1,0 +1,27 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android"> 
+
+    <!--<item android:state_window_focused="false" android:state_enabled="true" 
+
+        android:drawable="@drawable/img_v_cul" />
+        -->
+
+    <item android:state_enabled="false" 
+
+        android:drawable="@drawable/page_nextdisable" /> 
+
+    <!--点击状态-->
+    <item android:state_pressed="true"  
+
+        android:drawable="@drawable/page_next_focus" />
+    <!--可用状态 和 获取到焦点状态-->
+    <item android:state_focused="true" android:state_enabled="true" 
+
+        android:drawable="@drawable/page_next_focus" /> 
+
+    <!--button为可用状态 -->
+    <item android:state_enabled="true" 
+
+        android:drawable="@drawable/page_next" /> 
+
+
+</selector> 

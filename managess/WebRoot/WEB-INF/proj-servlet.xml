@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+"classes/com/ztenc/oa/proj/springConfig/config/spring-beans-2.0.dtd">
+<beans>
+
+	<!-- URL and VIEW MAPPINGS -->
+	<bean id="beanNameUrlMapping"
+	class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping">
+		<property name="order">
+			<value>1</value>
+		</property>
+	</bean>
+	<bean id="simpleUrlMapping"
+	class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="order">
+			<value>0</value>
+		</property>
+		<property name="mappings">
+			<props>
+				<!-- wr controllers Mapping 示例-->
+				<!--prop key="usermanage/addtheme.htm">addThemeController</prop>-->
+				<!--<prop key="huoyuanlist.jsp">readController</prop> -->
+				<prop key='login.htm'>loginController</prop>
+				<prop key='Image.htm'>Image</prop>
+				<prop key='modify.htm'>modifyPwController</prop>
+				<prop key='msg.htm'>msgController</prop>
+				<prop key='member.htm'>memberController</prop>
+				<prop key='group.htm'>groupController</prop>
+				<prop key='subject.htm'>subjectController</prop>
+				<prop key='courseware.htm'>coursewareController</prop>
+				<prop key='protype.htm'>columnController</prop>
+				<prop key='colcon.htm'>columnConController</prop>
+				<prop key='search.htm'>searchController</prop>
+				<prop key='corporate.htm'>corporateCultureController</prop>
+				<prop key='pronews.htm'>proNewsController</prop>
+				<prop key='proanswer.htm'>proAnswerController</prop>
+				<prop key='type.htm'>typeController</prop>
+				<prop key='answertype.htm'>answerTypeController</prop>
+				<prop key='product.htm'>productController</prop>
+				<prop key='advertis.htm'>advertisController</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- URL and VIEW MAPPINGS end-->
+
+	<!-- ViewResolver -->
+	<!-- viewResolver依据ModelAndView返回的view名，通过加前缀与后缀给定确切的jsp路径 -->
+	<bean id="viewResolver"
+	class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/WEB-INF/jsp/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<!-- ViewResolver  end-->
+
+</beans>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context reloadable="true" crossContext="true">
+
+    <!-- Default set of monitored resources -->
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+
+    <!-- Uncomment this to disable session persistence across Tomcat restarts -->
+    <!-- <Manager pathname="" /> -->
+
+    <Resource name="jdbc/hyh" auth="Container" type="javax.sql.DataSource"
+        driverClassName="com.mysql.jdbc.Driver"
+        url="jdbc:mysql://localhost:3306/hyh?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true"
+        username="root" password="1234" maxActive="100" maxIdle="30"
+        maxWait="10000" removeAbandoned="true" removeAbandonedTimeout="60"
+        logAbandoned="true"/>
+
+    <!-- Uncomment this to enable Comet connection tacking (provides events 
+        on session expiration as well as webapp lifecycle) -->
+    <!-- <Valve className="org.apache.catalina.valves.CometConnectionManagerValve" 
+        /> -->
+
+</Context>

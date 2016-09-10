@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2007 The Android Open Source Project
+	
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+	
+	http://www.apache.org/licenses/LICENSE-2.0
+	
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:background="@drawable/img_bg"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+
+       <LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:addStatesFromChildren="true"
+		android:background="@drawable/up_button" android:gravity="top"
+		android:paddingLeft="15dip" android:paddingRight="15dip">
+
+		<ImageButton android:id="@+id/lastpageid" 
+			android:layout_width="wrap_content"  android:visibility="invisible"
+			android:layout_height="wrap_content" android:layout_gravity="center_vertical"
+			android:src="@drawable/state_lastpage" android:background="#00000000" />
+
+		<TextView android:id="@+id/titleView"
+		android:text="产 品 介 绍" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:textSize="26dip"
+			android:layout_weight="1" android:textColor="#FFFFFF"
+			android:layout_gravity="center_vertical" android:gravity="center"/>
+			
+		<ImageButton android:id="@+id/nextpageid"
+			android:layout_width="wrap_content" android:visibility="invisible"
+			android:layout_height="wrap_content" android:layout_gravity="center_vertical"
+			android:src="@drawable/nextpage" android:background="#00000000" />
+
+
+	</LinearLayout>
+	
+	 <LinearLayout android:layout_width="fill_parent"
+		android:layout_height="45dip" android:addStatesFromChildren="true"
+		android:background="@drawable/itmage" android:gravity="center_horizontal"
+		android:paddingLeft="0dip">
+
+		<ImageButton android:id="@+id/page_food"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical"
+			android:src="@drawable/state_toolfood" android:background="#00000000"
+			android:layout_marginLeft="5dip"
+			android:layout_marginTop="5dip" />
+			
+			<ImageButton android:id="@+id/page_self"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical"
+			android:src="@drawable/state_toolself" android:background="#00000000"
+			android:layout_marginTop="5dip" />
+			 <ImageButton android:id="@+id/page_dress"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical"
+			android:src="@drawable/state_tooldress" android:background="#00000000"
+			android:layout_marginTop="5dip"/>
+			 <ImageButton android:id="@+id/page_other"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical"
+			android:src="@drawable/state_toolother" android:background="#00000000"
+			android:layout_marginTop="5dip"/>
+			
+	</LinearLayout>
+    
+
+	<WebView android:id="@+id/news_web"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:background="@drawable/item_bg"
+		android:cacheColorHint="#00000000">
+	</WebView>
+	
+	<ProgressBar android:id="@+id/firstBar"
+		style="?android:attr/progressBarStyleHorizontal"
+		android:layout_width="fill_parent"
+		android:layout_height="3dip" android:visibility="gone"
+		android:progressDrawable="@drawable/pros" />
+	
+
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:gravity="center"
+		android:layout_height="50dip"
+		android:background="@drawable/grid_bottom">
+
+		<ImageButton
+    	android:id="@+id/page_main"
+    	android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center_vertical"
+	    android:layout_weight="1"
+	    android:src="@drawable/state_pagemain"
+	    android:scaleType="fitCenter"
+	    android:background="#00000000"
+	    android:layout_marginLeft="5dip"
+    />
+    
+    	<ImageButton
+    	android:id="@+id/webUpdate"
+    	android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center_vertical"
+	    android:layout_weight="1"
+	    android:src="@drawable/state_pageupdate"
+	    android:scaleType="fitCenter"
+	    android:background="#00000000"
+	   
+    />
+    
+    	<ImageButton
+    	android:id="@+id/page_last"
+    	android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center_vertical"
+	    android:layout_weight="1"
+	    android:src="@drawable/state_pagelast"
+	    android:scaleType="fitCenter"
+	    android:background="#00000000"
+	   
+    />
+    
+    	<ImageButton
+    	android:id="@+id/page_next"
+    	android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center_vertical"
+	    android:layout_weight="1"
+	    android:src="@drawable/state_pagenext"
+	    android:scaleType="fitCenter"
+	    android:background="#00000000"
+	    
+    />
+    
+    <ImageButton
+    	android:id="@+id/page_more"
+    	android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center_vertical"
+	    android:layout_weight="1"
+	    android:src="@drawable/state_pagemeun"
+	    android:scaleType="fitCenter"
+	    android:background="#00000000"
+	    
+    />
+    
+    	<ImageButton
+    	android:id="@+id/page_exit"
+    	android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center_vertical"
+	    android:layout_weight="1"
+	    android:src="@drawable/state_pageexit"
+	    android:scaleType="fitCenter"
+	    android:background="#00000000"
+	   
+    />
+
+		
+	</LinearLayout>
+	
+</LinearLayout>

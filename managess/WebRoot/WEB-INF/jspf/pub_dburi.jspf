@@ -1,0 +1,30 @@
+
+
+<%
+java.util.Properties setting = new java.util.Properties();
+String prop = getServletContext().getRealPath("/WEB-INF/classes/com/ztenc/oa/proj/springConfig/hibernate.properties");
+java.io.FileInputStream fis = new java.io.FileInputStream(prop);
+String dburl ="jdbc:jtds:sqlserver://172.16.1.2:1433/wl668";
+String db_user="developer";
+String db_pass="123456";
+String db_driver="hibernate.connection.driver_class";
+try {
+			
+			setting.load(fis);
+			dburl = setting.getProperty("hibernate.connection.url");
+			db_user = setting.getProperty("hibernate.connection.username");
+			db_pass = setting.getProperty("hibernate.connection.password");
+			db_driver = setting.getProperty("hibernate.connection.driver_class");
+			System.out.println("dburl=="+dburl);
+			System.out.println("db_user=="+db_user);
+			System.out.println("db_pass=="+db_pass);
+			System.out.println("db_driver=="+db_driver);
+			fis.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}finally{
+		
+			fis.close();
+		}
+		
+%>

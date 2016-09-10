@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans WEB-INF/classes/com/ztenc/oa/proj/springConfig/spring-beans-2.0.xsd
+       http://www.springframework.org/schema/tx WEB-INF/classes/com/ztenc/oa/proj/springConfig/spring-tx-2.0.xsd
+       http://www.springframework.org/schema/aop WEB-INF/classes/com/ztenc/oa/proj/springConfig/spring-aop-2.0.xsd">
+
+
+
+	<!--Hibernate TransactionManager-->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="logAdvisor" class="com.ztenc.oa.proj.function.LogAdvisor">
+	<property name="order" value="2" ></property>
+	</bean>
+	
+	<aop:config>
+   
+	<aop:pointcut id="serviceOperation" expression="execution(* com.ztenc.oa.proj.service..*ServiceImpl.*(..))"/>
+        <aop:advisor pointcut-ref="serviceOperation" advice-ref="txAdvice" order="1" />
+        
+     <aop:aspect id="logAdvisorAspect" ref="logAdvisor">
+		<aop:pointcut id="allServiceMethod" expression="execution(* com.ztenc.oa.proj.service..*ServiceImpl.cud123*(..))"/>
+		<aop:around method="logService" pointcut-ref="allServiceMethod"/>
+		</aop:aspect>
+		
+	</aop:config>
+	
+	
+  	<tx:advice id="txAdvice">
+  	<tx:attributes>
+            <tx:method name="get*" read-only="true"  />
+            <tx:method name="*" rollback-for="com.ztenc.oa.proj.util.ServiceException" />
+        </tx:attributes>
+    </tx:advice>
+	
+	<bean id="safePwd" class="com.ztenc.oa.proj.util.SafePwdImpl">
+	<property name="pwdSalt"  >
+	<value>${util.safepwd.pwdSalt}</value>
+	</property>
+	</bean>
+</beans>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+			  "config/spring-beans-2.0.dtd">
+
+<beans>
+	<!-- = = = = = = = SECURITY FILTERS = = = = = = = -->
+	<bean id="filterChainProxy"
+		class="org.acegisecurity.util.FilterChainProxy">
+		<property name="filterInvocationDefinitionSource">
+			<value>
+				<![CDATA[
+				CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+				PATTERN_TYPE_APACHE_ANT
+				/**=httpSessionContextIntegrationFilter,logoutFilter,authenticationProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor
+			]]>
+			</value>
+		</property>
+	</bean>
+	<bean id="httpSessionContextIntegrationFilter"
+		class="org.acegisecurity.context.HttpSessionContextIntegrationFilter" />
+	<bean id="logoutFilter"
+		class="org.acegisecurity.ui.logout.LogoutFilter">
+		<constructor-arg value="/login.jsp" />
+		<constructor-arg>
+			<list>
+				<bean
+					class="org.acegisecurity.ui.logout.SecurityContextLogoutHandler" />
+			</list>
+		</constructor-arg>
+	</bean>
+	<bean id="authenticationProcessingFilter"
+		class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilter">
+		<property name="authenticationManager"
+			ref="authenticationManager" />
+		<property name="authenticationFailureUrl"
+			value="/login.jsp?failed=true" />
+		<property name="defaultTargetUrl" value="/index.jsp" />
+		<property name="filterProcessesUrl"
+			value="/j_acegi_security_check" />
+	</bean>
+
+	<bean id="exceptionTranslationFilter"
+		class="org.acegisecurity.ui.ExceptionTranslationFilter">
+		<property name="authenticationEntryPoint">
+			<bean
+				class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilterEntryPoint">
+				<property name="loginFormUrl" value="/accessDenied.jsp" />
+				<property name="forceHttps" value="false" />
+			</bean>
+		</property>
+		<property name="accessDeniedHandler">
+			<bean
+				class="org.acegisecurity.ui.AccessDeniedHandlerImpl">
+				<property name="errorPage" value="/accessDenied.jsp" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- = = = = = = = = SECURITY INTERCEPTOR = = = = = = = = -->
+	<bean id="filterInvocationInterceptor"
+		class="org.acegisecurity.intercept.web.FilterSecurityInterceptor">
+		<property name="authenticationManager">
+			<ref bean="authenticationManager" />
+		</property>
+		<property name="accessDecisionManager">
+			<ref bean="accessDecisionManager" />
+		</property>
+
+		<property name="objectDefinitionSource">
+			<value>
+				<![CDATA[
+				CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+				PATTERN_TYPE_APACHE_ANT
+				/child/registerchild.htm=PRI_M,PRI_O
+				/index.jsp=PRI_M,PRI_O
+				/child/update/updatechild.htm=PRI_M,PRI_O
+				/child/query/querychild.htm=PRI_M,PRI_O
+				/user/new/newuser.htm=PRI_M
+				/user/query/queryuser.htm=PRI_M
+				/user/delete/deleteuser.htm=PRI_M
+				/user/update/updateuser.htm=PRI_M
+				/user/update/updatepwd.htm=PRI_M,PRI_O
+			]]>
+			</value>
+		</property>
+	</bean>
+	<!-- = = = = = = = = AUTHENTICATION = = = = = = = -->
+	<bean id="authenticationManager"
+		class="org.acegisecurity.providers.ProviderManager">
+		<property name="providers">
+			<list>
+				<ref bean="daoAuthenticationProvider" />
+			</list>
+		</property>
+	</bean>
+	<bean id="daoAuthenticationProvider" 
+      class="org.acegisecurity.providers.dao.DaoAuthenticationProvider">
+    <property name="userDetailsService"><ref bean="authenticationDao"/></property>
+    		<!-- UserCache property will activate the cache, it is not 
+		mandatory but increases performance by cacheing the user 
+		details retrieved from user-base -->
+		<property name="userCache" ref="userCache"/>
+		<property name="passwordEncoder"><ref local="passwordEncoder"/></property>
+		<property name="saltSource">
+          <bean class= "org.acegisecurity.providers.dao.salt.SystemWideSaltSource">
+            <property name="systemWideSalt">
+            <value>${util.safepwd.pwdSalt}</value>
+           </property>
+          </bean>
+         </property>
+	
+  </bean>
+  <bean id="passwordEncoder" class="org.acegisecurity.providers.encoding.Md5PasswordEncoder"/>
+  
+    <bean id="userCache" class="org.acegisecurity.providers.dao.cache.NullUserCache">
+	</bean>
+	<bean id="authenticationDao"
+		class="org.acegisecurity.userdetails.jdbc.JdbcDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="usersByUsernameQuery">
+			<value>
+			select fls.USER_INFO.user_num,fls.USER_INFO.user_pwd, 1 from fls.USER_INFO where fls.USER_INFO.user_num = ?
+			</value>
+		</property>
+		<property name="authoritiesByUsernameQuery">
+			<value>
+				select fls.USER_INFO.user_num,fls.USER_INFO.user_pri from fls.USER_INFO
+                where fls.USER_INFO.user_num=?
+			</value>
+		</property>
+	</bean>
+	<!-- = = = = = = = = ACCESS CONTROL = = = = = = = -->
+	<bean id="accessDecisionManager"
+		class="org.acegisecurity.vote.AffirmativeBased">
+		<property name="allowIfAllAbstainDecisions">
+			<value>false</value>
+		</property>
+		<property name="decisionVoters">
+			<list>
+				<ref bean="roleVoter" />
+			</list>
+		</property>
+	</bean>
+	<bean id="roleVoter" class="org.acegisecurity.vote.RoleVoter">
+		<property name="rolePrefix">
+
+			<value>PRI_</value>
+
+		</property>
+
+	</bean>
+
+</beans>

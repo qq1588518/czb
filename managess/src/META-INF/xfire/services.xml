@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://xfire.codehaus.org/config/1.0">
+  <service>
+    <serviceClass>com.ztenc.oa.proj.service.xfire.CarWebServiceImpl</serviceClass>
+    <wsdlURL>http://10.81.48.203:8089/wlglws/service/car.ws?wsdl</wsdlURL>
+    <serviceFactory>org.codehaus.xfire.jaxb2.JaxbServiceFactory</serviceFactory>
+  </service>
+</beans>
+

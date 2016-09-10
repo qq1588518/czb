@@ -1,0 +1,19 @@
+*{	MARGIN:0px;	PADDING:0px;}
+UL{	MARGIN:0px;	PADDING:0px;	list-style-type:none;}
+BODY{	BACKGROUND:URL("../images/login/bg.gif") repeat-x #152652;	WIDTH:100%;	TEXT-ALIGN:center;	FONT-SIZE:12px;}
+.CONTAINER{	WIDTH:847px;	MARGIN:0 auto;	TEXT-ALIGN:left;}
+.HEADER{	WIDTH:847px;	HEIGHT:322px;	BACKGROUND:URL("../images/login/login1.gif");}
+.LOGIN LI{	float:left;}
+.LOGIN IMG{	MARGIN-BOTTOM:-3px;}
+.FOOTER{	CLEAR:left;	WIDTH:847px;	HEIGHT:209px;	BACKGROUND:URL("../images/login/login7.gif");}
+.LOGINBAR{	DISPLAY:BLOCK;	WIDTH:162px;	HEIGHT:82px;	BACKGROUND:URL("../images/login/login_bg.gif") repeat-x;}
+.BTN{	DISPALY:BLOCK;	WIDTH:67px;	HEIGHT:82px;	BACKGROUND:URL("../images/login/login_bg.gif") repeat-x;}
+.LOGINBAR_TEXT{	PADDING-TOP:5px;}
+.LOGINBAR_TEXT LI{	PADDING-TOP:5px;}
+.TBORDER{	WIDTH:99px;	HEIGHT:17px;BORDER:solid 1px #153865;	BACKGROUND-COLOR:#87adbf;}
+.TBORDER1{	WIDTH:50px;	HEIGHT:17px;	BORDER:solid 1px #153865;	BACKGROUND-COLOR:#87adbf;}
+.CHECK{	WIDTH:10px;	height:17px;}
+.ITEM_TITLE{	CLEAR:left;	WIDTH:50px;	COLOR:#afbccf;}
+.BTN_LOGIN{	PADDING-TOP:19px;	PADDING-LEFT:5px;}
+.BTN_LOGIN LI{	PADDING-BOTTOM:5px;}
+.BTN_LOGIN LI IMG{	CURSOR:pointer;}

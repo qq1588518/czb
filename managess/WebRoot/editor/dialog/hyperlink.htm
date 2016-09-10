@@ -1,0 +1,197 @@
+<HTML>
+<HEAD>
+<META content="text/html; charset=utf-8" http-equiv=Content-Type>
+
+<style type="text/css">
+body, a, table, div, span, td, th, input, select{font:9pt;font-family: "����", Verdana, Arial, Helvetica, sans-serif;}
+body {padding:5px}
+</style>
+
+<Script Language=JavaScript src="dialog.js"></script>
+
+
+<Script Language=JavaScript>
+var sAction = URLParams['action'];
+var sTitle = "����";
+
+var objWindow;
+
+var oRange;
+var sType;
+var oSel;
+
+var sUrl = "http://";
+var sProtocol = "http://";
+var sTarget = "";
+
+switch (sAction){
+case "other":
+	sUrl = dialogArguments.objLink.Href;
+	sTarget = dialogArguments.objLink.Target;
+	sProtocol = getProtocol(sUrl);
+	objWindow = dialogArguments.opener;
+	break;
+default:
+	oRange = dialogArguments.eWebEditor.document.selection.createRange();
+	sType = dialogArguments.eWebEditor.document.selection.type;
+
+	if (sType == "Control") {
+		oSel = oRange(0).parentNode;
+	}else{
+		oSel = oRange.parentElement();
+	}
+
+	if (oSel.tagName.toUpperCase() == "A"){
+		sTarget = oSel.target;
+		sUrl = oSel.getAttribute("href",2);
+		sProtocol = getProtocol(sUrl);
+	}
+	objWindow = dialogArguments;
+	break;
+}
+
+
+
+
+// �ӵ�ַȡЭ��
+function getProtocol(url){
+	var re=/(.+:\/*)(.*)/gi;
+	return url.replace(re,"$1");
+}
+
+// �ı�Э��
+function changeProtocol(index){
+	sProtocol=d_protocol.options[index].value;
+	sUrl = d_url.value;
+	var re = /(.+:\/*)/gi;
+	sUrl = sUrl.replace(re, "");
+	d_url.value = sProtocol + sUrl;
+}
+
+
+// ��ʼֵ
+function InitDocument(){
+	SearchSelectValue(d_protocol, sProtocol.toLowerCase());
+	SearchSelectValue(d_target, sTarget.toLowerCase());
+	getAnchors();
+	d_url.value = sUrl;
+}
+
+// ȡ���е�ê
+function getAnchors() {
+	d_anchor.options.length = 1;
+	var allLinks = objWindow.eWebEditor.document.body.getElementsByTagName("A");
+	for (i=0; i < allLinks.length; i++) {
+		if (allLinks[i].href.toUpperCase() == "") {
+			d_anchor.options[d_anchor.options.length] = new Option(allLinks[i].name,"#"+allLinks[i].name);
+		}
+	}
+}
+
+</Script>
+
+
+
+<title>����t������</title>
+
+<SCRIPT event=onclick for=Ok language=JavaScript>
+	sUrl = d_url.value;
+	sProtocol = d_protocol.options[d_protocol.selectedIndex].value;
+	sTarget = d_target.options[d_target.selectedIndex].value;
+
+	if (sUrl != ""){
+		switch (sAction){
+		case "other":
+			var arr = new Array();
+			arr[0] = sUrl;
+			arr[1] = sTarget;
+			window.returnValue = arr;
+			break;
+		default:
+			oRange.execCommand("CreateLink",false,sUrl);
+
+			oRange = dialogArguments.eWebEditor.document.selection.createRange();
+			sType = dialogArguments.eWebEditor.document.selection.type;
+
+			if (sType == "Control") {
+				oSel = oRange(0).parentNode;
+			}else{
+				oSel = oRange.parentElement();
+			}
+
+			if (sTarget != ""){
+				oSel.target = sTarget;
+			}else{
+				oSel.removeAttribute("target");
+			}
+			window.returnValue = null;
+			break;
+		}
+	} else {
+		alert("t�ӵ�ַ����Ϊ��");
+		d_url.focus();
+		return;
+	}
+	window.close();
+</SCRIPT>
+
+</HEAD>
+
+<body bgcolor=menu onload="InitDocument()">
+
+<table border=0 cellpadding=0 cellspacing=0 align=center>
+<tr>
+	<td>
+	<fieldset>
+	<legend>����t����Ϣ</legend>
+	<table border=0 cellpadding=0 cellspacing=0>
+	<tr><td colspan=9 height=5></td></tr>
+	<tr>
+		<td width=7></td>
+		<td noWrap>t������:</td>
+		<td width=5></td>
+		<td><select id=d_protocol style="width:72px" onchange="changeProtocol(this.selectedIndex)">
+				<option value=''>����</option>
+				<option value='file://'>file:</option>
+				<option value='ftp://'>ftp:</option>
+				<option value='gopher://'>gopher:</option>
+				<option value='http://'>http:</option>
+				<option value='https://'>https:</option>
+				<option value='mailto:'>mailto:</option>
+				<option value='news:'>news:</option>
+				<option value='telnet:'>telnet:</option>
+				<option value='wais:'>wais:</option>
+				</select></td>
+		<td width=40></td>
+		<td noWrap>t��Ŀ��:</td>
+		<td width=5></td>
+		<td><select id=d_target style="width:72px"><option value=''>Ĭ��(��)</option><option value='_self'>��ͬ���</option><option value='_top'>��ҳ</option><option value='_blank'>�½�����</option><option value='_parent'>�����</option></select></td>
+		<td width=7></td>
+	</tr>
+	<tr><td colspan=9 height=5></td></tr>
+	<tr>
+		<td width=7></td>
+		<td>t�ӵ�ַ:</td>
+		<td width=5></td>
+		<td colspan=5><input type=text id=d_url size=38 value="" style="width:243px"></td>
+		<td width=7></td>
+	</tr>
+	<tr><td colspan=9 height=5></td></tr>
+	<tr>
+		<td width=7></td>
+		<td>��ǩt��:</td>
+		<td width=5></td>
+		<td colspan=5><select id=d_anchor onchange="d_url.value=this.options[this.selectedIndex].value"><option value=''>Ĭ��(��)</option></select></td>
+		<td width=7></td>
+	</tr>
+	<tr><td colspan=9 height=5></td></tr>
+	</table>
+	</fieldset>
+	</td>
+</tr>
+<tr><td height=5></td></tr>
+<tr><td align=right><input type=submit value='  ȷ��  ' id=Ok>&nbsp;&nbsp;<input type=button value='  ȡ��  ' onclick="window.close();"></td></tr>
+</table>
+
+</BODY>
+</HTML>

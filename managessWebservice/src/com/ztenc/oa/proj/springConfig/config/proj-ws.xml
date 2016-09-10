@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+			  "spring-beans-2.0.dtd">
+<beans>
+	<!-- 此文件主要是提供ws服务的一些配置 -->
+
+	<import resource="classpath:org/codehaus/xfire/spring/xfire.xml" />
+	<!--  发布服务的基类 -->
+	<bean id="baseWebService"
+		class="org.codehaus.xfire.spring.remoting.XFireExporter"
+		lazy-init="false" abstract="true">
+		<property name="serviceFactory">
+			<ref bean="xfire.serviceFactory" />
+		</property>
+		<property name="xfire">
+			<ref bean="xfire" />
+		</property>
+	</bean>
+
+	
+	<!--  服务的实现 -->
+	<!-- bean id="psws"
+		class="com.ztenc.oa.proj.service.wsUpload.PictureServiceImpl">
+	</bean -->
+	<!-- <bean id="hello"
+		class="com.ztenc.oa.proj.service.wsTest.HelloServiceImpl">
+	</bean> -->
+	
+	<bean id="managess"
+		class="com.ztenc.oa.proj.web.webservice.ManagessIntefaceImpl">
+		<property name="loninService">
+			<ref bean="loninService" />
+		</property>
+		<property name="sysOptService">
+			<ref bean="sysOptService" />
+		</property>		
+	</bean>
+	
+		<bean id="version"
+		class="com.ztenc.oa.proj.web.webservice.GetVersionInterfaceImpl">
+		<property name="getVersionService">
+			<ref bean="getVersionService" />
+		</property>
+		
+	</bean>
+	<bean id="tt"
+		class="com.ztenc.oa.proj.web.webservice.SumWebserviceImpl">
+		
+		
+	</bean>
+	
+	
+	<!--  发布服务 -->
+	<!--  <bean id="helloService" parent="baseWebService">
+		<property name="serviceBean">
+			<ref bean="hello" />
+		</property>
+		<property name="serviceClass">
+			<value>com.ztenc.oa.proj.service.wsTest.HelloService</value>
+		</property>
+	
+	</bean> -->
+	
+		<!--  发布服务 -->
+	<bean id="managessInteface" parent="baseWebService">
+		<property name="serviceBean">
+			<ref bean="managess" />
+		</property>
+		<property name="serviceClass">
+			<value>com.ztenc.oa.proj.web.webservice.ManagessInteface</value>
+		</property>	
+	</bean>
+	
+	<bean id="getversion" parent="baseWebService">
+		<property name="serviceBean">
+			<ref bean="version" />
+		</property>
+		<property name="serviceClass">
+			<value>com.ztenc.oa.proj.web.webservice.GetVersionInterface</value>
+		</property>	
+	</bean>
+	<bean id="test" parent="baseWebService">
+		<property name="serviceBean">
+			<ref bean="tt" />
+		</property>
+		<property name="serviceClass">
+			<value>com.ztenc.oa.proj.web.webservice.SumWebservice</value>
+		</property>	
+	</bean>
+	
+
+
+</beans>

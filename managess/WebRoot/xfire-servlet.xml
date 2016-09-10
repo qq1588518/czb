@@ -1,0 +1,16 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+			  "classes/com/ztenc/oa/cds/springConfig/config/spring-beans-2.0.dtd">
+<beans>
+	<bean
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="urlMap">
+			<map>
+			<!-- 发布示例-->
+				<entry key="/service/hello.ws">
+					<ref bean="helloService" />
+				</entry>
+
+			</map>
+		</property>
+	</bean>
+</beans>

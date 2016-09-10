@@ -1,0 +1,179 @@
+如何利用ASP把图片上传到数据库 
+作者：Admin  来源：ASP教程  发布时间：2004-10-14 8:46:10  发布人：admin 
+减小字体 增大字体 
+
+
+ASP（Active Server Pages）是Microsoft很早就推出的一种WEB应用程序解决方案，也是绝大多数从事网站开发人员很熟悉的一个比较简单的编程环境。通过ASP我们可以创建功能强大的动态的WEB应用程序。ASP虽然功能很强大，但有些功能用纯ASP代码完成不了，为了能保证开发出功能更加强大的WEB应用程序，我们可以借助调用COM组件。 
+
+在日常工作中，例如开发一个“商品网上销售系统”吧，为了使顾客对商品的外观有所了解，也就是顾客在看商品的文字介绍的同时在文字的旁边有该商品的图片加以说明，这样顾客就可以对该商品有个系统的了解，对推销商品有很大的帮助。所以我们在开发系统时当然就要加入图片处理模块，即如何把图片上传到服务器（图片可以放在WEB服务器上某一个文件夹里也可以放在SQL Server服务器里）和如何让上传的图片在浏览器端显示出来，这都是开发人员要考虑到的问题。 
+
+上传图片到服务器有多种方法，可以使用文件上传组件也可以使用纯ASP代码来实现。在CSDN的WEB版ASP上经常有网友问这样的问题“如何利用ASP把图片上传到数据库里”，为了方便CSDN需要了解这方面的知识，这篇文章将详细讲解使用ASP上传图片的做法并给出代码，以飨读者。 
+
+首先了解一下在程序中用到的各种对象及其语法： 
+
+1） Request.BinaryRead()方法 
+
+● 使用Request.BinaryRead()方法可以获取提交的文件数据 
+
+● 语法 
+
+VarReValue= Request.BinaryRead(number) 
+
+变量VarReValue返回值保存从客户端读取到的二进制数据； 
+
+参数number指明要从客户端读取的二进制数据量的大小。 
+
+2） Response.BinaryWrite()方法 
+
+● 使用Response.BinaryWrite()方法可以从数据库中获取图片数据并显示到客户端的浏览器中。 
+
+● 语法 
+
+Response.BinaryWrite data 
+
+参数data是要写进客户端浏览器中的二进制数据包。 
+
+3） AppendChunk方法 
+
+● AppendChunk方法的作用是将二进制数据追加到Field或Parameter对象。 
+
+● 语法 
+
+object.AppendChunk data 
+
+参数data为要追加到Field或Parameter对象中的数据包。 
+
+4） GetChunk方法 
+
+● GetChunk方法返回二进制数据的内容。 
+
+● 语法 
+
+object. GetChunk(size) 
+
+参数size指明要返回二进制数据的长度，可以是长整型表达式。 
+
+5） Request.TotalBytes方法 
+
+● Request.TotalBytes方法返回从客户端读取到的数据的字节数，这个值跟上面所提到的number相对应，可以大于或等于number值。 
+
+● 语法 
+
+number= Request.TotalBytes 
+
+大体了解了一些方法及其使用方法后，接下来我们就开始设计数据库和相关编写代码了。 
+
+第一步：数据库的设计（以Ms SQL Server7为例）： 
+
+Create table img --创建用来存储图片的表，命名为img 
+
+( 
+
+id int identity(1,1) not null, 
+
+img image 
+
+) 
+
+
+第二步：程序编写，其中省略了用户输入界面，这里只给出很重要的两个文件即图片上传处理(processimg.asp)和显示图片(ShowImg.asp)文件。 
+
+1） processimg.asp文件代码： 
+
+〈% 
+
+Response.Buffer=True 
+
+ImageSize=Request.TotalBytes ‘获取提交数据量的总字节数 
+
+ImageData=Request.BinaryRead(ImageSize) ‘保存从客户端读取到的数据 
+
+‘优化读取到的二进制数据 
+
+BnCrLf=chrB(13)&chr(10) 
+
+Divider=LeftB(ImageData,Clng(InstrB(ImageData, BnCrLf))-1) 
+
+Dstart=InstrB(ImageData, BnCrLf& BnCrLf)+4 
+
+Dend=InstrB(Dstart+1, ImageData, Divider)- Dstart 
+
+MyData=MidB(ImageData, Dstart, Dend) 
+
+‘创建对象实例 
+
+Set imgConn=Server.CreateObject(“ADODB.Connection”) 
+
+StrConn=”Driver={SQL Server};Server=ServerName;”& _ 
+
+“Uid=xxxx;Pwd=xxxx;DataBase=DataBaseName” 
+
+imgConn.open strConn 
+
+Set Rs= Server.CreateObject(“ADODB.RecordSet”) 
+
+Sql=”Select * From img Where id is null” 
+
+Rs.open sql,imgConn,1,3 
+
+‘追加数据到数据库 
+
+Rs.AddNew 
+
+Rs(“img”).AppendChunk myData 
+
+Rs.Update 
+
+‘关闭和释放对象 
+
+Rs.close 
+
+ImgConn.close 
+
+Set Rs=Nothing 
+
+Set ImgConn=Nothing 
+
+%〉 
+
+2) ShowImg.asp文件代码： 
+
+〈% 
+
+Response.Expires = 0 
+
+Response.buffer=True 
+
+Response.clear 
+
+‘创建对象实例 
+
+Set imgConn=Server.CreateObject(“ADODB.Connection”) 
+
+StrConn=”Driver={SQL Server};Server=ServerName;”& _ 
+
+“Uid=xxxx;Pwd=xxxx;DataBase=DataBaseName” 
+
+imgConn.open strConn 
+
+Set Rs= Server.CreateObject(“ADODB.RecordSet”) 
+
+Sql=”Select img From img Where id=1” 这里的id可以使用Request(“id”)获得 
+
+Rs.open sql,imgConn,1,1 
+
+Response.ContentType=”image/*” 
+
+Response.BinaryWrite Rs.(“img”).GetChunk(7500000) 
+
+‘关闭和释放对象 
+
+Rs.close 
+
+ImgConn.close 
+
+Set Rs=Nothing 
+
+Set ImgConn=Nothing 
+
+%〉  

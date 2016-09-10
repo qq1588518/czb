@@ -1,0 +1,88 @@
+@author 曹杰
+----------------------------------代码说明--------------------------------------
+1.使用此分页功能必须实现PcurrentDataService接口中的方法：
+ /**
+  * 获得相应的数据信息
+  * @param 数据信息
+  * @Object o为传递的查询参数
+  * @return 获得数据的开始下标，数据长度
+  */
+	public Object[] getInfo(int index,int length,Object o);
+//分两个情况当为length为时-1返回由count(*)返回的总数对象OBJECT[0]	
+2.实现此方法后，直接调用PaginationServiceImpl中的方法
+/**
+  * 分页接口
+  * @param HttpServletRequest request请求
+  * @return PcurrentDataDaoService 包含操作DAO的对象service
+  */
+public Object[] service(HttpServletRequest request,PcurrentDataDaoService vardao);
+
+此方法做2件事情 
+  一.返回一个记录对象数组即所要显示的分页内容。
+  二.将一些状态信息以request请求返回给页面。
+  具体参数含义：
+  效果--->  第1页 共10页 首页 上一段 下一段 末页 1 2 3 4 5 6 7 8 9 10
+  condition :1.first_down_notempty 处于第1段中，并且下1段存在
+             2.first_down_empty    处于第1段中，并且下1段不存在
+             3.middle              处于中间段， 上1段下1段都存在
+             4.last_up_notempty    处于第最后1段中，并且上1段存在
+  upid       转向上一段时，上段页码
+  downid     转向下一段时，下段页码
+  lastid     最后1页代码
+  linkstartnum 导航起始页玛
+  linkendnum   导航结束页玛
+  
+  ----------------------------------使用方法---------------------------------------
+  ----------spring ioc注入----------
+  1.实现PcurrentDataService接口
+  2.在需要分页的controller中主入实现PcurrentDataService类
+                           注入PaginationService类
+     调用PaginationService的service(HttpServletRequest request,PcurrentDataDaoService vardao,Object o);
+     返回记录对象数组即所要显示的分页内容。
+  3.加入以下配置文件
+  <!--========================== cjPagination util DEFINITIONS====================-->
+        <bean id="paginationService" class="com.ztenc.oa.zbs.util.pagination.PaginationServiceImpl">
+            <property name="paginationBOI">
+                <ref bean="paginationBOI"/>
+            </property>
+        </bean>
+        
+        <bean id="paginationBean" class="com.ztenc.oa.zbs.util.pagination.PaginationBean">
+       
+        </bean>
+        
+        <bean id="paginationBOI" class="com.ztenc.oa.zbs.util.pagination.PaginationBOImpl">
+            <property name="paginationBean">
+                <ref bean="paginationBean"/>
+            </property>
+        </bean>
+        
+    <!--===========================cjPagination util END=========================== -->
+ -----------------没有查询条件的情况-------------
+      COPY pagination.js
+    4.需要射定1个本页名称参数 比如为usermanage.htm分页 在此页加入<c:set var="pagename" value="usermanage.htm?/&"/>
+    5.将pagination.jsp页面放到你想放的地方， 比如为usermanage.htm分页 <%@include file="地址/pagination.jsp"%>
+    完成
+ --------------非spring ioc注入-------------------------
+ 1.实现PcurrentDataService接口
+ 2.在需要分页的controller中实现PcurrentDataService，PaginationService类
+   调用调用PaginationService的service(HttpServletRequest request,PcurrentDataDaoService vardao);
+       返回记录对象数组即所要显示的分页内容。
+ 3.将PaginationBOImpl,PaginationServiceImpl中根据注释部分说明更改
+ 4.需要射定1个本页名称参数 比如为usermanage.htm分页 在此页加入<c:set var="pagename" value="usermanage.htm?"/>
+   需要加一个URL参数符号可能是&也可能是？如:<c:set var="pagename" value="usermanage.htm?action=go&"/>
+ 5.将pagination.jsp页面放到你想放的地方， 比如为usermanage.htm分页 <%@include file="地址/pagination.jsp"%>
+    完成
+ ------------------有查询条件的情况-------------------------
+ 前提：
+ 查询条件需要在1个FORM中以Post方式发送
+ COPY pagination.js
+ 需要在有查询条件的FORM中设置2个hidden区域
+ //是为了用来传递JS参数的
+ <input type="hidden" name="pageid">
+ <input type="hidden" name="eachpagenum">
+ 
+ 将serpagination.jsp页面放到你想放的地方， 比如为usermanage.htm分页 <%@include file="地址/serpagination.jsp"%>
+ 完成
+
+  

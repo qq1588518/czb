@@ -1,0 +1,15 @@
+body{margin:0;padding:0;color:#333}
+*{line-height:22px;font-size:18px;margin:0;padding:0}
+img{border:0}
+img,input{vertical-align:middle}
+li{list-style:none}
+a{color:#039;text-decoration:none}
+a:hover{color:#f00;text-decoration:none}
+p,dl,li{padding:0 5px}
+#wrap{margin:0 auto;width:100%; background-color:#fff9f2; }
+.p{background:#d80c18;border-bottom:1px solid #fff;line-height:25px}
+.p,.p a{color:#fff;text-decoration:none;}
+.p a:hover{color:#fff}
+.p2{border-bottom:none}
+h1{text-align:center;line-height:25px;border-bottom:1px solid #ef8043;margin:0 5px;font-weight:normal;color:#ef8043}
+.info{text-align:center}

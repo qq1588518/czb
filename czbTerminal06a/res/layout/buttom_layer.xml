@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="40dip" android:gravity="center"
+	android:background="@drawable/grid_bottom">
+
+
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:gravity="center">
+		<Button android:id="@+id/change" android:layout_width="55dip"
+			android:layout_height="40dip"
+			android:layout_gravity="center_vertical" android:layout_weight="1"
+			android:scaleType="fitCenter" android:text="模式切换"
+			android:textSize="17dip" android:layout_marginTop="2dip"
+			android:layout_marginLeft="20dip" />
+
+		<Button android:id="@+id/button45" android:layout_width="2dip"
+			android:layout_height="40dip"
+			android:layout_gravity="center_vertical" android:layout_weight="1"
+			android:scaleType="fitCenter" android:text="d"
+			android:textSize="18dip" android:layout_marginTop="2dip"
+			android:visibility="invisible" />
+			
+        <Button android:id="@+id/button46" android:layout_width="2dip"
+			android:layout_height="40dip"
+			android:layout_gravity="center_vertical" android:layout_weight="1"
+			android:scaleType="fitCenter" android:text="d"
+			android:textSize="18dip" android:layout_marginTop="2dip"
+			android:visibility="invisible" />
+
+
+		<Button android:id="@+id/search" android:layout_width="23dip"
+			android:layout_height="40dip"
+			android:layout_gravity="center_vertical" android:layout_weight="1"
+			android:scaleType="fitCenter" android:text="搜索"
+			android:textSize="17dip" android:layout_marginTop="2dip" />
+
+		<Button android:id="@+id/exit" android:layout_width="23dip"
+			android:layout_height="40dip"
+			android:layout_gravity="center_vertical" android:layout_weight="1"
+			android:scaleType="fitCenter" android:text="退出"
+			android:textSize="17dip" android:layout_marginTop="2dip"
+			android:layout_marginRight="20dip" />
+	</LinearLayout>
+</LinearLayout>

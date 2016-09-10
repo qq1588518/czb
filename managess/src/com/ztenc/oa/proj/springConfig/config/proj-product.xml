@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+			  "spring-beans-2.0.dtd">
+<beans>
+<!--MultiLogController共用解析器-->
+	<bean id="methodNameResolver"
+		class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+		<property name="paramName">
+			<value>action</value>
+		</property>
+	</bean>
+
+	<!--mutication控制器  -->
+	<!--MultiLogController共用解析器-->
+	<!-- 基于收到的请求解析它必须调用的方法 -->
+
+	<bean id="productController"
+		class="com.ztenc.oa.proj.web.product.ProductController">
+		<property name="methodNameResolver">
+			<ref bean="methodNameResolver" />
+		</property>
+		<property name="productService">
+		  <ref bean="productService"/>
+		</property>
+	</bean>
+	
+	<bean id="productService" class="com.ztenc.oa.proj.service.product.ProductServiceImpl">
+	  <property name="productDao">
+	     <ref bean="productDao"/>
+	  </property>
+	    <property name="serviceCountDao">
+	     <ref bean="serviceCountDao"/>
+	  </property>
+	</bean>
+	
+	<bean id="productDao" class="com.ztenc.oa.proj.dao.product.ProductDaoImpl">
+	<property name="sessionFactory">
+	   <ref bean="sessionFactory"/>
+	</property>
+	</bean>
+	
+	<bean id="serviceCountDao" class="com.ztenc.oa.proj.dao.ServiceCount.ServiceCountDaoImpl">
+	<property name="sessionFactory">
+	   <ref bean="sessionFactory"/>
+	</property>
+	</bean>
+	
+	<bean id="safePwd" class="com.ztenc.oa.proj.util.SafePwdImpl">
+		<property name="pwdSalt"  >
+		<value>${util.safepwd.pwdSalt}</value>
+		</property>
+	</bean>
+</beans>

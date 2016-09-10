@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+			  "spring-beans-2.0.dtd">
+<beans>
+	<!-- 加载配置文件 -->
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>
+					classpath:com/ztenc/oa/proj/springConfig/hibernate.properties
+				</value>
+				<value>
+					classpath:com/ztenc/oa/proj/springConfig/wsurl.properties
+				</value>
+			</list>
+		</property>
+		<property name="fileEncoding" value="utf-8" />
+	</bean>
+	<!-- 加载国际化信息 -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<!-- 加载国际化信息文件， 命名为小写模块名_resource,如m1_resource 除公用的外各模块以模块名
+					为文件夹名自建文件夹，并在自已的文件夹下建相关文件，现在有三类，无后缀为默认英文，en_US英文，zh_CN中文
+					且在国际化信息中的key加上模块名为前缀，如功用的为greeting.morning，模块1就为m1.greeting.morning-->
+				<value>
+					com/ztenc/oa/proj/springConfig/config/i18n/resource
+				</value>
+				<value>
+					com/ztenc/oa/proj/springConfig/config/i18n/m1/m1_resource
+				</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 配置异常处理 -->
+	<bean id="exceptionResolver"
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="defaultErrorView">
+		<!-- 通用运行时异常处理 -->
+			<value>/exception/failure</value>
+		</property>
+		<property name="exceptionMappings">
+			<props>
+			<!-- 自定义异常处理 -->
+				<prop
+					key="com.ztenc.oa.proj.util.ServiceException">
+					/exception/err
+				</prop>
+				<prop
+					key="org.springframework.dao.DataAccessException">
+					/exception/failure
+				</prop>
+				<prop
+					key="org.springframework.web.util.NestedServletException">
+					/exception/failure
+				</prop>
+			</props>
+		</property>
+	</bean>
+	
+<!--切面 日志信息 -->
+    <!--启动对@ASPCETJ的支持 -->
+    <bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator" />
+    <!-- 切面 -->   
+    <bean class="com.ztenc.oa.proj.function.aspect.LogAspect">
+    <!--value 越高越先 -->
+       <property name="order" value="100"/>
+    </bean>
+ 
+
+</beans>

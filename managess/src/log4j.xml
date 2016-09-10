@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"> 
+
+	<!-- 
+		Appender - 日志目的地，把格式化好的日志信息输出到指定的地方去 
+			ConsoleAppender - 目的地为控制台的Appender 
+			FileAppender - 目的地为文件的Appender 
+			RollingFileAppender - 目的地为大小受限的文件的Appender 
+		Layout - 日志格式化器，用来把程序员的logging request格式化成字符串 
+		PatternLayout - 用指定的pattern格式化logging request的Layout 
+	-->
+	
+	<!-- 设置通道ID:com.ztes.commons.webapp.log.all和输出方式：org.apache.log4j.RollingFileAppender -->
+	<appender name="logHtmlFile" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="e:/YofotoCzbGo/logs/test/test.html" /><!-- 设置File参数：日志输出文件名 -->
+		<param name="Append" value="true" /><!-- 设置是否在重新启动服务时，在原有日志的基础添加新日志 -->
+		<param name="MaxBackupIndex" value="10" /> <!-- 日志备份文件的个数-->
+		<param name="MaxFileSize" value="200KB" /> <!-- 设置文件大小 -->
+		<layout class="org.apache.log4j.HTMLLayout">
+			<!-- 设置输出文件项目和格式 -->
+			<param name="Title" value="日志(proj)" />
+		</layout>
+	</appender>
+	
+	<!-- a console appender 每条日志都会输出到控制台 -->
+	<appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%t] %p - %m%n" />
+		</layout>
+	</appender>
+	
+
+	<!-- 我将名为logHtmlFile的appender配置到root下一直没成功，配置这里时才成功 -->
+	<!-- 一个category子元素定义一个日志写出器 -->
+	<category name="com.ztenc.oa.proj"> <!-- 设置域名限制，即com.ztenc.oa.proj包及以下的日志均输出到下面对应的通道中 -->
+		<param name="additivity" value="false"/><!--是否继承父类的appender -->
+		<priority value="error" /><!-- 设置级别 -->
+		<appender-ref ref="logHtmlFile" /><!-- 与前面的通道id相对应 -->
+		
+	</category>
+	
+	<category name="org">
+	    <param name="additivity" value="false"/><!--是否继承父类的appender -->
+		<priority value="error" />
+		<appender-ref ref="logHtmlFile" />
+	</category>
+
+	<!-- root子元素定义了root logger  -->
+	<root> <!-- 设置接收所有输出的通道 -->
+		<priority value ="error" />
+		<!--<appender-ref ref="stdout" /> 与前面的通道id相对应 -->
+		<!-- 与前面的通道id相对应 -->
+	</root>
+
+</log4j:configuration>
